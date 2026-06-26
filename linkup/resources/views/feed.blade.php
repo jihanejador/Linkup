@@ -1,39 +1,20 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LinkUp</title>
-
-   <script src="https://cdn.tailwindcss.com"></script>
+    <title>LinkUp Feed</title>
 </head>
+<body>
 
-<body class="bg-gray-100">
+    <h1>LinkUp Feed</h1>
 
-    <!-- Navbar -->
-
-    <nav class="bg-white shadow">
-
-        <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-
-            <h1 class="text-2xl font-bold text-blue-700">
-                LinkUp
-            </h1>
-
-            <a href="{{ route('feed') }}"
-               class="font-semibold hover:text-blue-700">
-                Feed
-            </a>
-
+    @foreach($posts as $post)
+        <div style="border:1px solid #ccc; margin:10px; padding:10px;">
+            <h3>{{ $post->user->name }}</h3>
+            <p>{{ $post->user->headline }}</p>
+            <hr>
+            <p>{{ $post->content }}</p>
         </div>
-
-    </nav>
-
-    <main class="max-w-5xl mx-auto py-8">
-
-        @yield('content')
-
-    </main>
+    @endforeach
 
 </body>
 </html>
