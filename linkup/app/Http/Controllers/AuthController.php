@@ -29,5 +29,6 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
             'headline' => $request->headline,
         ]);
+        Auth::login($user);
     }
 }
