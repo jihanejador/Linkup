@@ -39,5 +39,9 @@ class AuthController extends Controller
             'email' => 'required|string|email',
             'password' => 'required|string',
         ]);
+        if (Auth::attempt($credentials)){
+            $request->session()->regenerate();
+            return redirect()->intended('/feed');
+        }
     }
 }
