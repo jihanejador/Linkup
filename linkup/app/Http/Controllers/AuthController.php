@@ -33,4 +33,8 @@ class AuthController extends Controller
 
         return redirect()->route('feed');
     }
+
+    public function login(Request $request){
+        
+    }
 }
