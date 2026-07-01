@@ -30,5 +30,7 @@ class AuthController extends Controller
             'headline' => $request->headline,
         ]);
         Auth::login($user);
+
+        return redirect()->route('feed');
     }
 }
