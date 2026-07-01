@@ -16,4 +16,12 @@ class AuthController extends Controller
     public function showlogin(){
         return view('auth.login');
     }
+    public function register(Request $request){
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+            'headline' => 'required|string|max:255',
+        ]);
+    }
 }
