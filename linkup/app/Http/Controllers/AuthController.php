@@ -43,5 +43,9 @@ class AuthController extends Controller
             $request->session()->regenerate();
             return redirect()->intended('/feed');
         }
+        return back()->withErrors([
+            'email' => 'les identifiants ne correspondent pas',
+
+        ])->onlyInput('email');
     }
 }
