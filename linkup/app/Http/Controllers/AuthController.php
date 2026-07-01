@@ -23,5 +23,11 @@ class AuthController extends Controller
             'password' => 'required|string|min:8|confirmed',
             'headline' => 'required|string|max:255',
         ]);
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'headline' => $request->headline,
+        ]);
     }
 }
