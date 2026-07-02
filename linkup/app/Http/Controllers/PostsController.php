@@ -12,5 +12,6 @@ class PostsController extends Controller
         return view('feed', compact('posts'));
     }
     public function store(StorePostRequest $request){
+        $validated = $request->validated();
     }
 }
