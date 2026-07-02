@@ -14,7 +14,7 @@ class PostsController extends Controller
     public function store(StorePostRequest $request){
         $validated = $request->validated();
 
-        $request->user()->posts()->create([
+        $request->user()->Posts()->create([
             'content' => $validated['content'],
         ]);
         return redirect()->route('feed');
