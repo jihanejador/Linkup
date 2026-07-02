@@ -15,7 +15,6 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-
 Route::middleware('guest')->group(function (){
     Route::get('/register', [AuthController::class, 'showregister'])->name('show.register');
     Route::get('/login', [AuthController::class, 'showlogin'])->name('show.login');
@@ -25,3 +24,4 @@ Route::middleware('guest')->group(function (){
 
 });
 
+Route::post('/logout',[AuthController::class, 'logout'])->name('logout');
