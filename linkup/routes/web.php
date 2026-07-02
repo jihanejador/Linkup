@@ -8,9 +8,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/feed', [PostsController::class, 'index'])->name('feed');
+Route::middleware('guest')->group(function (){
+    Route::get('/register', [AuthController::class, 'showregister'])->name('show.register');
+    Route::get('/login', [AuthController::class, 'showlogin'])->name('show.login');
 
-Route::get('/register', [AuthController::class, 'showregister'])->name('show.register');
-Route::get('/login', [AuthController::class, 'showlogin'])->name('show.login');
+    Route::post('/register', [AuthController::class, 'register'])->name('register.submit');
+    Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
 
-Route::post('/register', [AuthController::class, 'register'])->name('register.submit');
-Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
+});
+
