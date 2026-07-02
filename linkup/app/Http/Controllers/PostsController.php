@@ -17,5 +17,6 @@ class PostsController extends Controller
         $request->user()->posts()->create([
             'content' => $validated['content'],
         ]);
+        return redirect()->route('feed');
     }
 }
