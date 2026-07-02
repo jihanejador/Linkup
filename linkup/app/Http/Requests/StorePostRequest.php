@@ -26,4 +26,10 @@ class StorePostRequest extends FormRequest
             'content' => ['required', 'string', 'min:10'],
         ];
     }
+    public function messages(): array{
+        return [
+            'content.required' => 'Le texte du post est obligatoire',
+            'content.min' => 'Le post doit contenir au moins 10 caracteres',
+        ];
+    }
 }
