@@ -23,7 +23,8 @@
     <h2>S'inscrire sur LinkUp</h2>
 
     <form action="{{ route('register.submit') }}" method="POST">
-        @csrf <div class="form-group">
+        @csrf
+        <div class="form-group">
             <label>Nom complet</label>
             <input type="text" name="name" value="{{ old('name') }}" required>
             @error('name') <div class="error">{{ $message }}</div> @enderror
