@@ -13,5 +13,9 @@ class PostsController extends Controller
     }
     public function store(StorePostRequest $request){
         $validated = $request->validated();
+
+        $request->user()->posts()->create([
+            'content' => $validated['content'],
+        ]);
     }
 }
