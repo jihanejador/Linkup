@@ -7,7 +7,15 @@ use App\Http\Controllers\AuthController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/feed', [PostsController::class, 'index'])->name('feed');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/feed', [PostsController::class, 'index'])->name('feed');
+    Route::get('/feed', [PostsController::class, 'store'])->name(posts.store);
+
+});
+
+
+
 Route::middleware('guest')->group(function (){
     Route::get('/register', [AuthController::class, 'showregister'])->name('show.register');
     Route::get('/login', [AuthController::class, 'showlogin'])->name('show.login');
