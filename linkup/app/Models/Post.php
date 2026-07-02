@@ -10,7 +10,7 @@ class Posts extends Model
         'user_id',
         'content',
     ];
-    public function User(){
+    public function user(){
         return $this->belongsTo(User::class);
     }
 }

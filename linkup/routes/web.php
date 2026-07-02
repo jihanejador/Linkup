@@ -10,7 +10,7 @@ Route::get('/', function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/feed', [PostsController::class, 'index'])->name('feed');
-    Route::get('/feed', [PostsController::class, 'store'])->name('posts.store');
+    Route::get('/posts', [PostsController::class, 'store'])->name('posts.store');
 
 });
 
