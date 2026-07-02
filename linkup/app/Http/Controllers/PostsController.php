@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Posts;
+use App\Http\Requests\StorePostRequest;
 
 class PostsController extends Controller
 {
