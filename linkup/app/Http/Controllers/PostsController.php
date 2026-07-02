@@ -11,4 +11,6 @@ class PostsController extends Controller
         $posts = Posts::with('user')->latest()->get();
         return view('feed', compact('posts'));
     }
+    public function store(StorePostRequest $request){
+    }
 }
