@@ -31,5 +31,7 @@ class PostsController extends Controller
         $post->update([
             'content' => $request->content,
         ]);
+
+        return redirect()->route('feed')->with('success', 'Post modifie avec succes');
     }
 }
