@@ -20,10 +20,9 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware('guest')->group(function (){
     Route::get('/register', [AuthController::class, 'showregister'])->name('show.register');
-    Route::get('/login', [AuthController::class, 'showlogin'])->name('show.login');
+    Route::get('/login', [AuthController::class, 'showlogin'])->name('login');
 
     Route::post('/register', [AuthController::class, 'register'])->name('register.submit');
     Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
 
 });
-
