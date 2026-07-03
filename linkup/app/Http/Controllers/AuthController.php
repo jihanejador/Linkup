@@ -52,5 +52,6 @@ class AuthController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
+        return redirect()->route('show.login')->with('success','vous etes deconnecte');
     }
 }
