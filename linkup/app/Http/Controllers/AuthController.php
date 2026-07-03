@@ -46,6 +46,9 @@ class AuthController extends Controller
         return back()->withErrors([
             'email' => 'les identifiants ne correspondent pas',
 
-        ])->onlyInput('email');
+        ]);
+    }
+    public function logout(Request $request){
+        
     }
 }
