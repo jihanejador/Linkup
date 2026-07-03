@@ -151,6 +151,70 @@
             font-size: 13px;
             margin-top: 15px;
         }
+
+        .post-actions {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+            border-top: 1px solid #eee;
+            padding-top: 12px;
+        }
+
+        .btn-action {
+            background: #f3f2ef;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .btn-action:hover {
+            background: #e4e3e0;
+        }
+
+        .btn-delete {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .btn-delete:hover {
+            background: #ffcdd2;
+        }
+
+        .edit-form-container {
+            display: none;
+            margin-top: 15px;
+            background: #fafafa;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .edit-form-container textarea {
+            width: 100%;
+            height: 60px;
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-family: Arial, sans-serif;
+            resize: none;
+            box-sizing: border-box;
+        }
+
+        .btn-save {
+            background: #0a66c2;
+            color: white;
+            border: none;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 8px;
+            float: right;
+        }
     </style>
 </head>
 <body>
@@ -201,10 +265,51 @@
             <div class="date">
                 {{ $post->created_at->format('d/m/Y H:i') }}
             </div>
+
+            @if(Auth::id() === $post->user_id)
+                <div class="post-actions">
+                    <button class="btn-action" onclick="toggleEditForm({{ $post->id }})">
+                        Modifier
+                    </button>
+
+                    <form action="{{ route('posts.destroy', $post->id) }}" method="POST" onsubmit="return confirm('Voulez-vous vraiment supprimer ce post ?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn-action btn-delete">
+                            Supprimer
+                        </button>
+                    </form>
+                </div>
+
+                <div id="edit-form-{{ $post->id }}" class="edit-form-container clearfix">
+                    <form action="{{ route('posts.update', $post->id) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <textarea name="content">{{ $post->content }}</textarea>
+
+                        @error('content')
+                            <span class="error-message">{{ $message }}</span>
+                        @enderror
+
+                        <button type="submit" class="btn-save">Enregistrer</button>
+                    </form>
+                </div>
+            @endif
         </div>
     @endforeach
 
 </div>
+
+<script>
+    function toggleEditForm(postId) {
+        var form = document.getElementById('edit-form-' + postId);
+        if (form.style.display === 'block') {
+            form.style.display = 'none';
+        } else {
+            form.style.display = 'block';
+        }
+    }
+</script>
 
 </body>
 </html>
