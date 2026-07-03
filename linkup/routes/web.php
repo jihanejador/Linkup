@@ -10,7 +10,8 @@ Route::get('/', function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/feed', [PostsController::class, 'index'])->name('feed');
-    Route::get('/posts', [PostsController::class, 'store'])->name('posts.store');
+    Route::post('/posts', [PostsController::class, 'store'])->name('posts.store');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 });
 
@@ -24,4 +25,3 @@ Route::middleware('guest')->group(function (){
 
 });
 
-Route::post('/logout',[AuthController::class, 'logout'])->name('logout');
