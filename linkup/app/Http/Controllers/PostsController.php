@@ -28,5 +28,8 @@ class PostsController extends Controller
         $request->validate([
             'content' => 'required|string|min:10',
         ]);
+        $post->update([
+            'content' => $request->content,
+        ]);
     }
 }
