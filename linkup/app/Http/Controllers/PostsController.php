@@ -24,5 +24,9 @@ class PostsController extends Controller
         if (Auth::id() !== $post->user_id){
             abort(403, 'action non autorisee');
         }
+
+        $request->validate([
+            'content' => 'required|string|min:10',
+        ]);
     }
 }
