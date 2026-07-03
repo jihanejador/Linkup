@@ -21,6 +21,8 @@ class PostsController extends Controller
     }
 
     public function update(Request $request, Posts $post){
-        
+        if (Auth::id() !== $post->user_id){
+            abort(403, 'action non autorisee');
+        }
     }
 }
