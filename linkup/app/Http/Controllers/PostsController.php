@@ -42,5 +42,7 @@ class PostsController extends Controller
         }
 
         $post->delete();
+
+        return redirect()->route('feed')->with('success', 'Post supprime avec succes');
     }
 }
