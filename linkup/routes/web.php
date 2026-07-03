@@ -12,6 +12,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/feed', [PostsController::class, 'index'])->name('feed');
     Route::post('/posts', [PostsController::class, 'store'])->name('posts.store');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::put('/posts/{post}', [PostsController::class, 'update'])->name('posts.update');
+    
 
 });
 
