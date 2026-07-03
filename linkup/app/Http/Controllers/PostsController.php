@@ -34,4 +34,8 @@ class PostsController extends Controller
 
         return redirect()->route('feed')->with('success', 'Post modifie avec succes');
     }
+
+    public function destroy(Posts $post){
+        
+    }
 }
