@@ -19,4 +19,8 @@ class PostsController extends Controller
         ]);
         return redirect()->route('feed');
     }
+
+    public function update(Request $request, Posts $post){
+        
+    }
 }
