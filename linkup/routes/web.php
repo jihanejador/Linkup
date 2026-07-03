@@ -13,7 +13,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/posts', [PostsController::class, 'store'])->name('posts.store');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::put('/posts/{post}', [PostsController::class, 'update'])->name('posts.update');
-    
+    Route::delete('/posts/{post}', [PostsController::class, 'destroy'])->name('posts.destroy');
 
 });
 
