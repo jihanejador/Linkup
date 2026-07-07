@@ -24,5 +24,6 @@ Route::middleware('guest')->group(function (){
 
     Route::post('/register', [AuthController::class, 'register'])->name('register.submit');
     Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
+    Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store');
 
 });
