@@ -13,5 +13,10 @@ class CommentController extends Controller
         $validated = $request->validate([
             'content'=> 'required|string|max:500',
         ]);
+        Comment::create([
+            'user_id' => Auth::id(),
+            'post_id' => $post->id,
+            'content' => $validated['content'],
+        ]);
     }
 }
