@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Posts;
 use App\Models\Comment;
-use Illuminate\Support\Facedes\Auth;
+use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
