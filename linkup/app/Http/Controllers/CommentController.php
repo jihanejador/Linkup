@@ -18,5 +18,6 @@ class CommentController extends Controller
             'post_id' => $post->id,
             'content' => $validated['content'],
         ]);
+        return back()->with('success', 'Commentaire ajoute avec succes !');
     }
 }
