@@ -10,6 +10,8 @@ use Illuminate\Support\Facedes\Auth;
 class CommentController extends Controller
 {
     public function store(Request $request, Posts $post){
-        
+        $validated = $request->validate([
+            'content'=> 'required|string|max:500',
+        ]);
     }
 }
