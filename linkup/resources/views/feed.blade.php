@@ -467,7 +467,7 @@
                                 <p class="comment-text">{{ $comment->content }}</p>
 
                                 @if(Auth::id() === $comment->user_id)
-                                    <form action="#" method="POST" onsubmit="return confirm('Supprimer ce commentaire ?')" style="display:inline;">
+                                    <form action="{{ route('comments.destroy', $comment->id) }}" method="POST" onsubmit="return confirm('Supprimer ce commentaire ?')" style="display:inline;">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn-delete-comment">Supprimer</button>
