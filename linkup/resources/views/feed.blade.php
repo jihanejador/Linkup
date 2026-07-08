@@ -215,6 +215,142 @@
             margin-top: 8px;
             float: right;
         }
+
+        .comments-counter {
+            font-size: 13px;
+            color: #666;
+            margin-top: 12px;
+            padding: 0 5px;
+        }
+
+        .comment-form-container {
+            border-top: 1px solid #eee;
+            padding-top: 12px;
+            margin-top: 8px;
+        }
+
+        .comment-input-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .comment-input-group input {
+            flex: 1;
+            background: #f3f2ef;
+            border: 1px solid transparent;
+            border-radius: 20px;
+            padding: 8px 15px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        .comment-input-group input:focus {
+            outline: none;
+            border-color: #0a66c2;
+            background: white;
+        }
+
+        .btn-comment {
+            background: #0a66c2;
+            color: white;
+            border: none;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .btn-comment:hover {
+            background: #004182;
+        }
+
+        .comments-list {
+            background: #f8f9fa;
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            max-height: 300px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .comment-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .comment-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: #5c6bc0;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .comment-bubble {
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            flex: 1;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            font-size: 14px;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3px;
+        }
+
+        .comment-author-name {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .comment-time {
+            font-size: 11px;
+            color: #777;
+        }
+
+        .comment-headline {
+            font-size: 12px;
+            color: #0a66c2;
+            margin: 2px 0 6px 0;
+            font-weight: 500;
+        }
+
+        .comment-text {
+            color: #444;
+            line-height: 1.4;
+            margin: 0;
+            word-break: break-word;
+        }
+
+        .btn-delete-comment {
+            background: none;
+            border: none;
+            color: #c62828;
+            font-size: 11px;
+            cursor: pointer;
+            padding: 0;
+            margin-top: 4px;
+            margin-left: 5px;
+        }
+
+        .btn-delete-comment:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -295,6 +431,54 @@
                     </form>
                 </div>
             @endif
+
+            <div class="comments-counter">
+                {{ $post->comments->count() }} {{ Str::plural('commentaire', $post->comments->count()) }}
+            </div>
+
+            <div class="comment-form-container">
+                <form action="{{ route('comments.store', $post->id) }}" method="POST">
+                    @csrf
+                    <div class="comment-input-group">
+                        <input type="text" name="content" placeholder="Ajouter un commentaire professionnel..." required maxlength="500">
+                        <button type="submit" class="btn-comment">Publier</button>
+                    </div>
+                    @error('content')
+                        <span class="error-message">{{ $message }}</span>
+                    @enderror
+                </form>
+            </div>
+
+            @if($post->comments->count() > 0)
+                <div class="comments-list">
+                    @foreach($post->comments as $comment)
+                        <div class="comment-item">
+                            <div class="comment-avatar">
+                                {{ strtoupper(substr($comment->user->name, 0, 1)) }}
+                            </div>
+                            <div class="comment-bubble">
+                                <div class="comment-header">
+                                    <span class="comment-author-name">{{ $comment->user->name }}</span>
+                                    <span class="comment-time">{{ $comment->created_at->diffForHumans() }}</span>
+                                </div>
+                                <div class="comment-headline">
+                                    {{ $comment->user->headline ?? 'Membre LinkUp' }}
+                                </div>
+                                <p class="comment-text">{{ $comment->content }}</p>
+
+                                @if(Auth::id() === $comment->user_id)
+                                    <form action="#" method="POST" onsubmit="return confirm('Supprimer ce commentaire ?')" style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn-delete-comment">Supprimer</button>
+                                    </form>
+                                @endif
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+
         </div>
     @endforeach
 
