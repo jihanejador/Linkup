@@ -402,6 +402,7 @@
                 <div>
                     <div class="name">
                         {{ $post->user->name }}
+
                     </div>
                     <div class="headline">
                         {{ $post->user->headline ?? 'Membre LinkUp' }}
@@ -411,6 +412,7 @@
 
             <div class="content">
                 {{ $post->content }}
+                
             </div>
 
             <div class="date">
