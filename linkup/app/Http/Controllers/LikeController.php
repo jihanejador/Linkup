@@ -22,6 +22,7 @@ class LikeController extends Controller
                 'user_id' => $userId,
                 'post_id' => $post->id
             ]);
+            return back()->with('success', 'Post Like !');
         }
     }
 }
