@@ -5,6 +5,7 @@ use App\Http\Controllers\PostsController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
     return view('welcome');
