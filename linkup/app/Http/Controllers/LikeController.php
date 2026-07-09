@@ -9,5 +9,10 @@ use Illuminate\Support\Facades\Auth;
 
 class LikeController extends Controller
 {
-    //
+    public function toggle(Posts $post){
+        $userId = Auth::id();
+        $existingLike = Like::where('user_id', $userId)
+                            ->where('post_id', $post->id)
+                            ->first();
+    }
 }
