@@ -14,5 +14,9 @@ class LikeController extends Controller
         $existingLike = Like::where('user_id', $userId)
                             ->where('post_id', $post->id)
                             ->first();
+        if ($existingLike){
+            $existingLike->delete();
+            return back()->with('success', 'like retire');
+        }
     }
 }
