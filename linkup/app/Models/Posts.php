@@ -23,6 +23,6 @@ class Posts extends Model
     }
 
     public function isLikedByUser(){
-        return $this()->where('user_id', auth()->id())->exists();
+        return $this->likes()->where('user_id', auth()->id())->exists();
     }
 }
