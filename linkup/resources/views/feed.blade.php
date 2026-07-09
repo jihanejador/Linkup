@@ -152,12 +152,22 @@
             margin-top: 15px;
         }
 
+        .stats-counter {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: #666;
+            margin-top: 12px;
+            padding: 0 5px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+        }
+
         .post-actions {
-            margin-top: 15px;
+            margin-top: 10px;
             display: flex;
             gap: 10px;
-            border-top: 1px solid #eee;
-            padding-top: 12px;
+            padding-top: 5px;
         }
 
         .btn-action {
@@ -169,10 +179,22 @@
             font-size: 13px;
             font-weight: bold;
             transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .btn-action:hover {
             background: #e4e3e0;
+        }
+
+        .btn-liked {
+            background: #e8f4fd;
+            color: #0a66c2;
+        }
+
+        .btn-liked:hover {
+            background: #d0e8ff;
         }
 
         .btn-delete {
@@ -216,17 +238,10 @@
             float: right;
         }
 
-        .comments-counter {
-            font-size: 13px;
-            color: #666;
-            margin-top: 12px;
-            padding: 0 5px;
-        }
-
         .comment-form-container {
             border-top: 1px solid #eee;
             padding-top: 12px;
-            margin-top: 8px;
+            margin-top: 12px;
         }
 
         .comment-input-group {
@@ -402,21 +417,43 @@
                 {{ $post->created_at->format('d/m/Y H:i') }}
             </div>
 
-            @if(Auth::id() === $post->user_id)
-                <div class="post-actions">
+            <div class="stats-counter">
+                <span>
+                    {{ $post->likes->count() }} {{ Str::plural('Like', $post->likes->count()) }}
+                </span>
+                <span>
+                    {{ $post->comments->count() }} {{ Str::plural('commentaire', $post->comments->count()) }}
+                </span>
+            </div>
+
+            <div class="post-actions">
+                <form action="{{ route('posts.like', $post->id) }}" method="POST" style="display: inline;">
+                    @csrf
+                    <button type="submit" class="btn-action {{ $post->isLikedByUser() ? 'btn-liked' : '' }}">
+                        @if($post->isLikedByUser())
+                            Aimé
+                        @else
+                            J'aime
+                        @endif
+                    </button>
+                </form>
+
+                @if(Auth::id() === $post->user_id)
                     <button class="btn-action" onclick="toggleEditForm({{ $post->id }})">
                         Modifier
                     </button>
 
-                    <form action="{{ route('posts.destroy', $post->id) }}" method="POST" onsubmit="return confirm('Voulez-vous vraiment supprimer ce post ?')">
+                    <form action="{{ route('posts.destroy', $post->id) }}" method="POST" onsubmit="return confirm('Voulez-vous vraiment supprimer ce post ?')" style="display: inline;">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn-action btn-delete">
                             Supprimer
                         </button>
                     </form>
-                </div>
+                @endif
+            </div>
 
+            @if(Auth::id() === $post->user_id)
                 <div id="edit-form-{{ $post->id }}" class="edit-form-container clearfix">
                     <form action="{{ route('posts.update', $post->id) }}" method="POST">
                         @csrf
@@ -431,10 +468,6 @@
                     </form>
                 </div>
             @endif
-
-            <div class="comments-counter">
-                {{ $post->comments->count() }} {{ Str::plural('commentaire', $post->comments->count()) }}
-            </div>
 
             <div class="comment-form-container">
                 <form action="{{ route('comments.store', $post->id) }}" method="POST">
