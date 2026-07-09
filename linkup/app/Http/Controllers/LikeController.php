@@ -17,6 +17,11 @@ class LikeController extends Controller
         if ($existingLike){
             $existingLike->delete();
             return back()->with('success', 'like retire');
+        }else{
+            Like::create([
+                'user_id' => $userId,
+                'post_id' => $post->id
+            ]);
         }
     }
 }
