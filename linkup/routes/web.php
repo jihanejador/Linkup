@@ -21,6 +21,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/posts/{posts}/comments', [CommentController::class, 'store'])->name('comments.store');
     Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
     Route::post('/posts/{post}/like', [LikeController::class, 'toggle'])->name('posts.like')->middleware('auth');
+    Route::get('/users/{user}', [ProfileController::class, 'show'])->name('profile_show')->middleware('auth');
 });
 
 Route::middleware('guest')->group(function (){
