@@ -17,8 +17,9 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/posts/{post}', [PostsController::class, 'update'])->name('posts.update');
     Route::delete('/posts/{post}', [PostsController::class, 'destroy'])->name('posts.destroy');
 
-    Route::post('/posts/{posts}/comments', [CommentController::class, 'store'])->name('comments.store'); // 👈 رجعناها {posts} بـ الجمع
+    Route::post('/posts/{posts}/comments', [CommentController::class, 'store'])->name('comments.store');
     Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
+    Route::post('/posts/{post}/like', [LikeController::class, 'toggle'])->name('posts.like')->middleware('auth');
 });
 
 Route::middleware('guest')->group(function (){
