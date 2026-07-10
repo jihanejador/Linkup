@@ -16,5 +16,14 @@ class FollowController extends Controller
             return redirect()->back()->with('error', "Vous ne pouvez pas vous suivre vous-même.");
         }
 
+        if ($me->isFollowing($user)) {
+            $me->followings()->detach($user->id);
+            $msg = "Vous ne suivez plus " . $user->name;
+        } else {
+            $me->followings()->attach($user->id);
+            $msg = "Vous suivez maintenant " . $user->name;
+        }
+
+        return redirect()->back()->with('success', $msg);
     }
 }
