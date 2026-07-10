@@ -57,7 +57,7 @@
     </form>
 
     <div class="link">
-        Déjà membre ? <a href="{{ route('show.login') }}">Se connecter</a>
+        {{-- Déjà membre ? <a href="{{ route('show.login') }}">Se connecter</a> --}}
     </div>
 </div>
 

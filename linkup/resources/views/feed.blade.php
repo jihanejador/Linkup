@@ -228,6 +228,10 @@
 </nav>
 
 <div class="container">
+    <div class="post">
+        <h3> Bonjour {{Auth::user()->name}}</h3>
+        <p>Vous avez publié <strong>{{Auth::user()->posts()->count()}} </strong> posts. </p>
+    </div>
 
     <div class="create-post-card clearfix">
         <form action="{{ route('posts.store') }}" method="POST">
