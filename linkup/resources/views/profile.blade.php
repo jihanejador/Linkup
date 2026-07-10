@@ -21,6 +21,7 @@
         .post-stats { font-size: 13px; color: #666; margin-top: 12px; border-top: 1px solid #eee; padding-top: 8px; }
 
         .alert-success { background: #d4edda; color: #155724; padding: 12px; margin-bottom: 20px; border-radius: 8px; border: 1px solid #c3e6cb; text-align: center; font-weight: bold; }
+        .alert-error { background: #f8d7da; color: #721c24; padding: 12px; margin-bottom: 20px; border-radius: 8px; border: 1px solid #f5c6cb; text-align: center; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -37,6 +38,11 @@
             {{ session('success') }}
         </div>
     @endif
+    @if(session('error'))
+        <div class="alert-error">
+            {{ session('error') }}
+        </div>
+    @endif
 
     <div class="profile-card">
         <div class="profile-avatar">
@@ -46,6 +52,17 @@
         <div class="profile-headline">{{ $user->headline ?? 'Membre professionnel chez LinkUp' }}</div>
         @if($user->company)
             <div class="profile-company">🏢 Actuellement chez <strong>{{ $user->company }}</strong></div>
+        @endif
+
+        @if(Auth::id() !== $user->id)
+            <div style="margin-top: 15px;">
+                <form action="{{ route('user.follow', $user->id) }}" method="POST">
+                    @csrf
+                    <button type="submit" style="cursor: pointer; padding: 8px 22px; border-radius: 20px; border: none; font-weight: bold; background-color: {{ Auth::user()->isFollowing($user) ? '#666' : '#0a66c2' }}; color: white; font-size: 14px; transition: 0.2s;">
+                        {{ Auth::user()->isFollowing($user) ? 'Following' : '+ Follow' }}
+                    </button>
+                </form>
+            </div>
         @endif
 
         @if(Auth::id() === $user->id)
