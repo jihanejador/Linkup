@@ -26,5 +26,6 @@ class ProfileController extends Controller
             'headline' => $request->headline,
             'company' => $request->company,
         ]);
+        return redirect()->route('profile_show)', $user->id)->with('success', 'Profil mis a jour avec succes !');
     }
 }
