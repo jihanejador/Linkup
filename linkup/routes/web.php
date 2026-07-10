@@ -19,6 +19,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/posts/{post}', [PostsController::class, 'destroy'])->name('posts.destroy');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/users/{user}/follow', [FollowController::class, 'toggle'])->name('user.follow');
 
     Route::post('/posts/{posts}/comments', [CommentController::class, 'store'])->name('comments.store');
     Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
