@@ -401,8 +401,9 @@
                 </div>
                 <div>
                     <div class="name">
-                        {{ $post->user->name }}
-
+                        <a href="{{ route('profile_show', $post->user->id)}}">
+                            {{ $post->user->name }}
+                        </a>
                     </div>
                     <div class="headline">
                         {{ $post->user->headline ?? 'Membre LinkUp' }}
@@ -412,7 +413,7 @@
 
             <div class="content">
                 {{ $post->content }}
-                
+
             </div>
 
             <div class="date">
