@@ -19,6 +19,8 @@
         .post { background: white; border-radius: 10px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,.1); }
         .post-date { color: #777; font-size: 13px; margin-top: 10px; }
         .post-stats { font-size: 13px; color: #666; margin-top: 12px; border-top: 1px solid #eee; padding-top: 8px; }
+
+        .alert-success { background: #d4edda; color: #155724; padding: 12px; margin-bottom: 20px; border-radius: 8px; border: 1px solid #c3e6cb; text-align: center; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -30,6 +32,12 @@
 
 <div class="container">
 
+    @if(session('success'))
+        <div class="alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <div class="profile-card">
         <div class="profile-avatar">
             {{ strtoupper(substr($user->name, 0, 1)) }}
@@ -38,6 +46,14 @@
         <div class="profile-headline">{{ $user->headline ?? 'Membre professionnel chez LinkUp' }}</div>
         @if($user->company)
             <div class="profile-company">🏢 Actuellement chez <strong>{{ $user->company }}</strong></div>
+        @endif
+
+        @if(Auth::id() === $user->id)
+            <div style="margin-top: 20px;">
+                <a href="{{ route('profile.edit') }}" style="display: inline-block; background: #0a66c2; color: white; padding: 8px 22px; border-radius: 20px; text-decoration: none; font-weight: bold; font-size: 14px; transition: 0.2s;">
+                    Modifier le profil
+                </a>
+            </div>
         @endif
     </div>
 
