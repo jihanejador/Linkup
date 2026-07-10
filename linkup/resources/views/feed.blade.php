@@ -114,6 +114,12 @@
             display: flex;
             align-items: center;
             margin-bottom: 15px;
+            justify-content: space-between; /* رجعناها هكا باش تدفع زر الفولو لليمين */
+        }
+
+        .author-info {
+            display: flex;
+            align-items: center;
         }
 
         .avatar {
@@ -133,6 +139,16 @@
         .name {
             font-size: 18px;
             font-weight: bold;
+        }
+
+        .name a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        .name a:hover {
+            color: #0a66c2;
+            text-decoration: underline;
         }
 
         .headline {
@@ -366,6 +382,9 @@
         .btn-delete-comment:hover {
             text-decoration: underline;
         }
+
+        .alert-success { background: #d4edda; color: #155724; padding: 12px; margin-bottom: 20px; border-radius: 8px; border: 1px solid #c3e6cb; text-align: center; font-weight: bold; }
+        .alert-error { background: #f8d7da; color: #721c24; padding: 12px; margin-bottom: 20px; border-radius: 8px; border: 1px solid #f5c6cb; text-align: center; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -379,6 +398,13 @@
 </nav>
 
 <div class="container">
+
+    @if(session('success'))
+        <div class="alert-success">{{ session('success') }}</div>
+    @endif
+    @if(session('error'))
+        <div class="alert-error">{{ session('error') }}</div>
+    @endif
 
     <div class="create-post-card clearfix">
         <form action="{{ route('posts.store') }}" method="POST">
@@ -396,28 +422,38 @@
     @foreach($posts as $post)
         <div class="post">
             <div class="header">
-                <div class="avatar">
-                    {{ strtoupper(substr($post->user->name, 0, 1)) }}
-                </div>
-                <div>
-                    <div class="name">
-                        <a href="{{ route('profile_show', $post->user->id)}}">
-                            {{ $post->user->name }}
-                        </a>
+                <div class="author-info">
+                    <div class="avatar">
+                        {{ strtoupper(substr($post->user->name, 0, 1)) }}
                     </div>
-                    <div class="headline">
-                        {{ $post->user->headline ?? 'Membre LinkUp' }}
+                    <div>
+                        <div class="name">
+                            <a href="{{ route('profile_show', $post->user->id)}}">
+                                {{ $post->user->name }}
+                            </a>
+                        </div>
+                        <div class="headline">
+                            {{ $post->user->headline ?? 'Membre LinkUp' }}
+                        </div>
                     </div>
                 </div>
+
+                @if(Auth::id() !== $post->user_id)
+                    <form action="{{ route('user.follow', $post->user->id) }}" method="POST">
+                        @csrf
+                        <button type="submit" style="cursor: pointer; padding: 5px 15px; border-radius: 20px; border: 1px solid #0a66c2; font-weight: bold; background-color: {{ Auth::user()->isFollowing($post->user) ? '#666' : 'white' }}; color: {{ Auth::user()->isFollowing($post->user) ? 'white' : '#0a66c2' }}; transition: 0.2s;">
+                            {{ Auth::user()->isFollowing($post->user) ? 'Following' : '+ Follow' }}
+                        </button>
+                    </form>
+                @endif
             </div>
 
             <div class="content">
                 {{ $post->content }}
-
             </div>
 
             <div class="date">
-                {{ $post->created_at->format('d/m/Y H:i') }}
+                Publié le {{ $post->created_at->format('d/m/Y H:i') }}
             </div>
 
             <div class="stats-counter">
@@ -433,11 +469,7 @@
                 <form action="{{ route('posts.like', $post->id) }}" method="POST" style="display: inline;">
                     @csrf
                     <button type="submit" class="btn-action {{ $post->isLikedByUser() ? 'btn-liked' : '' }}">
-                        @if($post->isLikedByUser())
-                            Aimé
-                        @else
-                            J'aime
-                        @endif
+                        {{ $post->isLikedByUser() ? "Aimé" : "J'aime" }}
                     </button>
                 </form>
 
