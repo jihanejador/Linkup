@@ -12,4 +12,8 @@ class ProfileController extends Controller
         $user->load('posts.likes', 'posts.comments');
         return view('profile', compact('user'));
     }
+    public function edit(){
+        $user = Auth::user();
+        return view('profile-edit', comact('user'));
+    }
 }
