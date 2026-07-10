@@ -16,4 +16,11 @@ class ProfileController extends Controller
         $user = Auth::user();
         return view('profile-edit', comact('user'));
     }
+    public function update(Request $request){
+        $user = Auth::user();
+        $request->validate([
+            'headline' => 'nullable|string|max:255',
+            'company' => 'nullable|string|max:255',
+        ])
+    }
 }
