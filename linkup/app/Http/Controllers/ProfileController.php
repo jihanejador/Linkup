@@ -9,6 +9,6 @@ class ProfileController extends Controller
 {
     public function show(User $user){
         $user->load('posts.likes', 'posts.comments');
-        return view('profile.show', compact('user'));
+        return view('profile', compact('user'));
     }
 }
