@@ -21,6 +21,10 @@ class ProfileController extends Controller
         $request->validate([
             'headline' => 'nullable|string|max:255',
             'company' => 'nullable|string|max:255',
-        ])
+        ]);
+        $user->update([
+            'headline' => $request->headline,
+            'company' => $request->company,
+        ]);
     }
 }
